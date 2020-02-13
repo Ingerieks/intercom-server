@@ -18,10 +18,20 @@ app.use(
   })
 )
 
+let tracks = [];
+
 app.get('/tracks/new', (request, response) => {
 
-  response.json([]);
+  response.json([tracks]);
+  
 })
+
+app.post('/tracks', (req, res) => {
+const track = req.body;
+tracks.push(track)
+})
+
+
 
 app.get('/users', db.getUsers)
 app.get('/users/:id', db.getUserById)
