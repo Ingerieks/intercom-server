@@ -18,8 +18,9 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.get('/', function (request, response) {
-  response.json({ info: 'Node.js, Express, and Postgres API' });
+app.get('/tracks/new', function (request, response) {
+
+  response.json([]);
 });
 
 app.get('/users', db.getUsers);
