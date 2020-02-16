@@ -18,18 +18,17 @@ app.use(
   })
 )
 
-let tracks = [];
-
 app.get('/tracks/new', (request, response) => {
-
+  const tracks = db.getTracks();
+  
   response.json([tracks]);
-
+  
 })
 
 app.post('/tracks', (req, res) => {
   const track = req.body;
   track.uploadDate = (new Date()).toISOString();
-  tracks.push(track)
+  db.createTrack(track);
 
   res.send(track);
 })
