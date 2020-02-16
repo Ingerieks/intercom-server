@@ -1,7 +1,7 @@
 //import app from './server';
 
 //app.listen(port, () => {
- // console.log(`Your app is running on port ${port}`); // eslint-disable-line
+// console.log(`Your app is running on port ${port}`); // eslint-disable-line
 // });
 
 const express = require('express')
@@ -23,12 +23,15 @@ let tracks = [];
 app.get('/tracks/new', (request, response) => {
 
   response.json([tracks]);
-  
+
 })
 
 app.post('/tracks', (req, res) => {
-const track = req.body;
-tracks.push(track)
+  const track = req.body;
+  track.uploadDate = (new Date()).toISOString();
+  tracks.push(track)
+
+  res.send(track);
 })
 
 

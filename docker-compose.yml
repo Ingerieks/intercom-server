@@ -13,6 +13,8 @@ services:
     environment:
       DATABASE_URL: postgres://intercom@postgres/intercom
   postgres:
+    ports:
+      - "5432:5432" 
     image: postgres:9.6.2-alpine
     environment:
       POSTGRES_USER: intercom
