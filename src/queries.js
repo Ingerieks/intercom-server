@@ -5,7 +5,7 @@ const pool = new Pool({
 })
 
 const getTracks = async () => {
-    return await pool.query('SELECT * FROM tracks ORDER BY id ASC').rows;
+    return (await pool.query('SELECT * FROM tracks ORDER BY id ASC')).rows;
 }
 
 const createTrack = async (track) => {

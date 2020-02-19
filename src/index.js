@@ -12,10 +12,10 @@ app.use(
   })
 )
 
-app.get('/tracks/new', async (request, response) => {
+app.get('/tracks/new', async (req, res) => {
   const tracks = await db.getTracks();
-  
-  response.json(tracks);
+  console.log("GET /tracks/new", tracks)
+  res.send(tracks);
   
 })
 
