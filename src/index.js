@@ -4,10 +4,12 @@ const bodyParser = require('body-parser')
 const app = express()
 const db = require('./queries')
 const port = process.env.PORT || 3000;
-
+const fileUpload = require('express-fileupload');
 const cors = require('cors')
 
 //middleware
+
+app.use(fileUpload({debug: true}));
 
 app.use(cors())
 
@@ -18,6 +20,8 @@ app.use(
   })
 )
 
+//routes
+
 app.get('/tracks/new', async (req, res) => {
   const tracks = await db.getTracks();
   console.log("GET /tracks/new", tracks)
@@ -25,11 +29,8 @@ app.get('/tracks/new', async (req, res) => {
   
 })
 
-
-//routes
-
 app.post('/tracks', async (req, res) => {
-  console.log(req.files); // the uploaded file object  
+  console.log(req.files, "files"); // the uploaded file object  
   const track = req.body;
   track.uploadDate = (new Date()).toISOString();
   const createdTrack = await db.createTrack(track);
