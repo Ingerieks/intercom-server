@@ -1,11 +1,13 @@
 
-const express = require('express')
-const bodyParser = require('body-parser')
-const app = express()
-const db = require('./queries')
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const db = require('./queries');
 const port = process.env.PORT || 3000;
 const fileUpload = require('express-fileupload');
-const cors = require('cors')
+const cors = require('cors');
+import { v4 as uuidv4 } from 'uuid';
+ 
 
 //middleware
 
@@ -30,8 +32,14 @@ app.get('/tracks/new', async (req, res) => {
 })
 
 app.post('/tracks', async (req, res) => {
-  console.log(req.files, "files"); // the uploaded file object  
-  const track = req.body;
+  console.log(req.files, "files"); // the uploaded file object 
+  const filePath = `${process.env.FILES}/${uuidv4()}`; 
+  req.files.audio.mv(filePath);
+
+  const track = { 
+    uploadDate: (new Date()).toISOString(),
+    path: filePath, 
+  };
   track.uploadDate = (new Date()).toISOString();
   const createdTrack = await db.createTrack(track);
   

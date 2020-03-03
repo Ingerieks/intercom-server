@@ -9,9 +9,9 @@ const getTracks = async () => {
 }
 
 const createTrack = async (track) => {
-    const { uploadDate } = track
+    const { uploadDate, path } = track
     
-    return await pool.query('INSERT INTO tracks ("upload_date") VALUES ($1)', [uploadDate]);
+    return await pool.query('INSERT INTO tracks ("upload_date", "path") VALUES ($1, $2)', [uploadDate, path]);
 }
 
 

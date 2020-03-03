@@ -6,12 +6,14 @@ services:
     volumes:
       - .:/usr/app/
       - /usr/app/node_modules
+      - ./data:/data
     ports:
       - "3000:3000" 
     depends_on:
       - postgres
     environment:
       DATABASE_URL: postgres://intercom@postgres/intercom
+      FILES: /data
   postgres:
     ports:
       - "5432:5432" 
