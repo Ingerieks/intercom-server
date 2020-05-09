@@ -14,3 +14,8 @@ File download URL is http://localhost:3000/tracks/file/8210086b-6d80-4f11-b57b-b
 
 "path":"/data/8210086b-6d80-4f11-b57b-bd56d53f9ce2"
 
+To create table 
+
+DATABASE_URL=postgres://intercom:intercom@localhost/intercom npm run prestart
+
+DATABASE_URL=postgres://intercom:intercom@localhost/intercom node ./node_modules/db-migrate/bin/db-migrate create add-filename
