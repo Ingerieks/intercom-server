@@ -22,6 +22,7 @@ DATABASE_URL=postgres://intercom:intercom@localhost/intercom npm run migrate
 
 DATABASE_URL=postgres://intercom:intercom@localhost/intercom node ./node_modules/db-migrate/bin/db-migrate up all
 
+Create Table
 DATABASE_URL=postgres://intercom:intercom@localhost/intercom node ./node_modules/db-migrate/bin/db-migrate create add-filename
 
 To run server
