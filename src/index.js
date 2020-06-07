@@ -55,7 +55,39 @@ app.post('/tracks', async (req, res) => {
 })
  
 
+//USER
 
+app.get('/users', async (req, res) => {
+  const dbUsers = await db.getUsers();
+  const users = dbUsers.map(user => {
+    return { 
+      id: user.id,
+      createdAt: user.created_at,
+      updatesAt: user.updater_at,
+      emailAddress: user.email_address,
+    }
+  });
+  console.log("GET /users", users)
+  res.send(users);
+  
+})
+
+app.post('/users', async (req, res) => {
+  console.log(req.body);
+
+  const user = { 
+    createdAt: (new Date()).toISOString(),
+    updatesAt: (new Date()).toISOString(),
+    emailAddress: req.body.emailAddress, 
+  };
+  const createdUser = await db.createUser(user);
+  
+  res.send(createdUser);
+})
+ 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
 });
+
+
+
