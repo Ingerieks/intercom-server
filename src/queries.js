@@ -16,8 +16,14 @@ const createTrack = async (track) => {
 
 //USER
 
-const getUsers = async () => {
-    return (await pool.query('SELECT * FROM users ORDER BY id ASC')).rows;
+const getUsers = async (filters) => {
+    const params = [];
+    let whereClause = "WHERE TRUE";
+    if ("emailAddress" in filters ) {
+        params.push(filters.emailAddress);
+        whereClause += " AND email_address = $1"
+    }
+    return (await pool.query(`SELECT * FROM users ${whereClause} ORDER BY email_address ASC`, params)).rows;
 }
 
 const createUser = async (user) => {

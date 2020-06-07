@@ -58,7 +58,11 @@ app.post('/tracks', async (req, res) => {
 //USER
 
 app.get('/users', async (req, res) => {
-  const dbUsers = await db.getUsers();
+  const filters = {};
+  if ("email_address" in req.query) { // a querystring parameter email_address was provided
+    filters.emailAddress = req.query.email_address; // the value of the email_address querystring parameter
+  }
+  const dbUsers = await db.getUsers(filters);
   const users = dbUsers.map(user => {
     return { 
       id: user.id,

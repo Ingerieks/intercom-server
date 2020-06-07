@@ -29,3 +29,6 @@ DATABASE_URL=postgres://intercom:intercom@localhost/intercom npm run migrate (*r
 ## TO RUN SERVER
 
 DATABASE_URL=postgres://intercom:intercom@localhost/intercom FILES=/mnt/c/Users/inges/Projects/intercomServer/uploads npm run dev
+
+## USER LIST WITH FILTER
+localhost:3000/users?email_address=isaunders@wbjs.org.za
