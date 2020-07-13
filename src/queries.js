@@ -4,8 +4,14 @@ const pool = new Pool({
     connectionString : connString
 })
 
-const getTracks = async () => {
-    return (await pool.query('SELECT * FROM tracks ORDER BY id ASC')).rows;
+const getNewTracks = async (userId) => {
+    const query = '\
+    SELECT t.upload_date, t.file_name FROM tracks t \
+    LEFT OUTER JOIN listened l on t.id = l.track_id \
+    WHERE $1 = l.user_id \
+    AND l.id IS NULL \
+    ORDER BY id ASC';
+    return (await pool.query(query, [userId])).rows;
 }
 
 const createTrack = async (track) => {
@@ -32,11 +38,22 @@ const createUser = async (user) => {
     return await pool.query('INSERT INTO users ("created_at", "updated_at", "email_address" ) VALUES ($1, $2, $3)', [createdAt, updatedAt, emailAddress]);
 }
 
+const createListen = async (listen) => {
+    const { userId, trackId, createdAt } = listen
+    
+    return await pool.query('INSERT INTO listened ("user_id", "track_id", "created_at" ) VALUES ($1, $2, $3)', [userId, trackId, createdAt]);
+}
+
 module.exports = {
-    getTracks,
+    getNewTracks,
     createTrack,
     getUsers,
     createUser,
+    createListen,
 }
+
+
+
+
 
 

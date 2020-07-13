@@ -24,18 +24,19 @@ app.use(
 
 //routes
 
-app.get('/tracks/new', async (req, res) => {
+app.get('/users/:userId/tracks/new', async (req, res) => {
   const dbTracks = await db.getTracks();
   const tracks = dbTracks.map(track => {
     return { 
       uploadDate: track.upload_date,
       url: `/tracks/file/${track.file_name}`
-    }
+    };
   });
-  console.log("GET /tracks/new", tracks)
+  console.log("GET /users/:userId/tracks/new", tracks)
+  console.log(req.params.userId);
   res.send(tracks);
   
-})
+});
 
 app.post('/tracks', async (req, res) => {
   console.log(req.files, "files"); // the uploaded file object 
@@ -69,12 +70,12 @@ app.get('/users', async (req, res) => {
       createdAt: user.created_at,
       updatesAt: user.updater_at,
       emailAddress: user.email_address,
-    }
+    };
   });
   console.log("GET /users", users)
   res.send(users);
   
-})
+});
 
 app.post('/users', async (req, res) => {
   console.log(req.body);
@@ -93,5 +94,23 @@ app.listen(port, () => {
   console.log(`App running on port ${port}.`)
 });
 
+// LISTENED TRACKS
+
+app.post('/listened', async (req, res) => {
+  console.log(req.body);
+
+  const listen = { 
+    userId: req.body.userId,
+    trackId: req.body.trackId,
+    createdAt: (new Date()).toISOString()
+  };
+  const createdListen = await db.createListen(listen);
+  
+  res.send(createdListen);
+})
+ 
+app.listen(port, () => {
+  console.log(`App running on port ${port}.`)
+});
 
 
