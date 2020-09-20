@@ -4,13 +4,13 @@ const pool = new Pool({
     connectionString : connString
 })
 
+
 const getNewTracks = async (userId) => {
     const query = '\
     SELECT t.upload_date, t.file_name FROM tracks t \
-    LEFT OUTER JOIN listened l on t.id = l.track_id \
-    WHERE $1 = l.user_id \
-    AND l.id IS NULL \
-    ORDER BY id ASC';
+    LEFT OUTER JOIN (select track_id, id from listened where $1 = user_id) l on t.id = l.track_id \
+    where l.id IS NULL \
+    ORDER BY t.id ASC';
     return (await pool.query(query, [userId])).rows;
 }
 

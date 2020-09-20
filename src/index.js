@@ -25,7 +25,7 @@ app.use(
 //routes
 
 app.get('/users/:userId/tracks/new', async (req, res) => {
-  const dbTracks = await db.getTracks();
+  const dbTracks = await db.getNewTracks(parseInt(req.params.userId));
   const tracks = dbTracks.map(track => {
     return { 
       uploadDate: track.upload_date,
@@ -33,7 +33,6 @@ app.get('/users/:userId/tracks/new', async (req, res) => {
     };
   });
   console.log("GET /users/:userId/tracks/new", tracks)
-  console.log(req.params.userId);
   res.send(tracks);
   
 });
